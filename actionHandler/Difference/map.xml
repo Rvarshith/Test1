@@ -1,0 +1,37 @@
+<map>
+	<attributes>
+		<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_LANGUAGES elastic="LANGUAGES" default="" type="json"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+		<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+		<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/difference/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and" }}}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "LANGUAGES", "KEYWORD", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID"]
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

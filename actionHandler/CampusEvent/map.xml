@@ -1,0 +1,182 @@
+<map>
+	<attributes>
+		<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string"/>
+		<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_START_DATE elastic="START_DATE" default="" type="string" />
+		<CTX_RES_END_DATE elastic="END_DATE" default="" type="string" />
+		<CTX_RES_START_TIME elastic="START_TIME" default="" type="string"/>
+		<CTX_RES_END_TIME elastic="END_TIME" default="" type="string"/>
+		<CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string"/>
+		<CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string"/>
+		<CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string"/>
+		<CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string"/>
+		<CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string"/>
+		<CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string"/>
+		<CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string"/>
+		<CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string"/>
+		<CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string"/>
+		<CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string"/>
+		<CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string"/>
+		<CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string"/>
+		<CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string"/>
+		<CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string"/>
+		<CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string"/>
+		<CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string"/>
+		<CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string"/>
+		<CTX_RES_VENUE elastic="LOCATION" default="" type="string"/>
+		<CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string"/>
+		<CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/>
+		<CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/>
+		<CTX_RES_URL elastic="REF_URL" default="" type="string" />
+		<CTX_RES_PH elastic="PHONE" default="" type="string" /> 
+		<CTX_RES_EMAIL elastic="EMAIL" default="" type="string" />
+		<CTX_RES_LAT_LON elastic="LAT_LON" default="" type="string"/>
+		<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+		<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+		<CTX_RES_EVENT_COUNT elastic="total" default="0" type="number"/>
+		<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+		<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+		<RELAVANCE elastic="RELAVANCE" default="0" type="number"/>
+	</attributes>
+	<steps>
+		<step name="CampusMatchQuery">
+			<query url="/campus_event/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "PRESENTER" : {"query":"?person", "operator":"and" }}},
+												{"match" : { "LOCATION" : {"query":"?venue", "operator":"and" }}},
+												{"query_string" : {"query": "?input_text", "fields":["ENTITY_NAME"]}}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"should":[
+												{
+													"bool": {
+														"must":[
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																				]		
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															}
+														]
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "START_DATE"
+																		}
+																	}
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "END_DATE"
+																		}
+																	}
+																}
+															}
+															
+														]
+													}
+												}
+												
+											]
+										}
+									}
+								]
+								
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "START_TIME", "END_TIME","WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "REF_URL", "PHONE", "EMAIL", "DESCRIPTION", "SECONDARY_ENTITY_NAME", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "MEDIA", "SUBJECT_AREA"],
+						"size": 10
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

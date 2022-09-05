@@ -1,0 +1,10 @@
+<map>
+	<attributes>
+		<Status elastic="status" type="String" />
+		<Reason elastic="reason" type="string" />
+		<Action elastic="action" type="string" />
+	</attributes>
+	<steps>
+		
+	</steps>
+</map>

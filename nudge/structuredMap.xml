@@ -1,0 +1,564 @@
+<map>
+	<AcademicEvent>
+		<attributes>
+			<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_NAME elastic="ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string"/>
+			<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+			<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+			<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_START_DATE elastic="START_DATE" default="" type="string" />
+			<CTX_RES_END_DATE elastic="END_DATE" default="" type="string"/>
+			<CTX_RES_START_TIME elastic="START_TIME" default="" type="string"/>
+			<CTX_RES_END_TIME elastic="END_TIME" default="" type="string"/>
+			<CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string"/>
+			<CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string"/>
+			<CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string"/>
+			<CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string"/>
+			<CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string"/>
+			<CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string"/>
+			<CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string"/>
+			<CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string"/>
+			<CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string"/>
+			<CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string"/>
+			<CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string"/>
+			<CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string"/>
+			<CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string"/>
+			<CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string"/>
+			<CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string"/>
+			<CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string"/>
+			<CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string"/>
+			<CTX_RES_VENUE elastic="LOCATION" default="" type="string"/>
+			<CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string"/>
+			<CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/>
+			<CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/>
+			<CTX_RES_URL elastic="REF_URL" default="" type="string" />
+			<CTX_RES_PH elastic="PHONE" default="" type="string" /> 
+			<CTX_RES_EMAIL elastic="EMAIL" default="" type="string" />
+			<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+			<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+			<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+			<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+			<CTX_RES_EVENT_COUNT elastic="total" default="0" type="number"/>
+			<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+			<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+		</attributes>
+	
+		<steps>
+			<step>
+				<query url="/academic-event/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "SECONDARY_ENTITY_NAME"
+																			}
+																		}
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																},
+																{									
+																	"range": {
+																		"START_DATE": {
+																			"gte": "now"
+																		}
+																	}
+																}
+															],
+															"boost": 50
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																},
+																{									
+																	"range": {
+																		"START_DATE": {
+																			"gte": "now"
+																		}
+																	}
+																}
+															],
+															"should": [
+																?replace_secondary
+															],
+															"boost": 30
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_secondary
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																},
+																{									
+																	"range": {
+																		"START_DATE": {
+																			"gte": "now"
+																		}
+																	}
+																}
+															],
+															"boost": 5
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							},
+							"size":30,
+							"_source": ["ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "REF_URL", "PHONE", "EMAIL", "DESCRIPTION", "REF_URL", "SECONDARY_ENTITY_NAME", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "START_TIME", "END_TIME", "MEDIA", "SUBJECT_AREA"],
+							"sort": [
+									{
+									"START_DATE": {
+										"order": "asc"
+									}
+								}
+							]
+						}
+					]]>
+				</query>
+				<replace_keyword>
+					<![CDATA[
+						{
+							"match": {
+								"KEYWORD": {
+									"query": "?KEYWORD"
+								}
+							}
+						}
+					]]>
+				</replace_keyword>
+				<replace_secondary>
+					<![CDATA[
+						{
+							"match": {
+								"SECONDARY_ENTITY_NAME": {
+									"query": "?SECONDARY"
+								}
+							}
+						}
+					]]>
+				</replace_secondary>
+			</step>
+			
+		</steps>
+	</AcademicEvent>
+
+	<Timing>
+		<attributes>
+			<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string"/>
+			<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+			<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+			<CTX_RES_START_DATE elastic="START_DATE" default="" type="date" />
+			<CTX_RES_END_DATE elastic="END_DATE" default="" type="date"/>
+			<CTX_RES_START_TIME elastic="START_TIME" default="" type="string"/>
+			<CTX_RES_END_TIME elastic="END_TIME" default="" type="string"/>
+			<CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string"/>
+			<CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string"/>
+			<CTX_RES_WEEKEND_START_TIME elastic="WEEKEND_START_TIME" default="" type="string"/>
+			<CTX_RES_WEEKEND_END_TIME elastic="WEEKEND_END_TIME" default="" type="string"/>
+			<CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string"/>
+			<CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string"/>
+			<CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string"/>
+			<CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string"/>
+			<CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string"/>
+			<CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string"/>
+			<CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string"/>
+			<CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string"/>
+			<CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string"/>
+			<CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string"/>
+			<CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string"/>
+			<CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string"/>
+			<CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string"/>
+			<CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string"/>
+			<CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string"/>
+			<CTX_RES_VENUE elastic="LOCATION" default="" type="string"/>
+			<CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string"/>
+			<CTX_RES_PERSON elastic="PERSON" default="" type="string"/>
+			<CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/>
+			<CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/>
+			<CTX_RES_URL elastic="REF_URL" default="" type="string" />
+			<CTX_SHORT_URL elastic="SHORT_URL" default="" type="string" />
+			<CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string"/>
+			<CTX_RES_PH elastic="PHONE" default="" type="string" />
+			<CTX_RES_EMAIL elastic="EMAIL" default="" type="string" />
+			<CTX_RES_FAX elastic="FAX" default="" type="string" col="lon"/>
+			<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+			<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+			<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+			<CTX_RES_INTENT elastic="INTENT" default="Timing" type="string"/>
+			<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+			<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+			<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+		</attributes>
+	
+		<steps>
+			<step>
+				<query url="/timing/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "SECONDARY_ENTITY_NAME"
+																			}
+																		}
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"boost": 50
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"should": [
+																?replace_secondary
+															],
+															"boost": 30
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_secondary
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"boost": 5
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							},
+							"size":30,
+							"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "WEEKEND_START_TIME", "WEEKEND_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "DESCRIPTION", "LOCATION", "PHONE", "EMAIL", "LAT_LON", "PRESENTER", "REF_URL", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "FAX", "PERSON", "MAP_URL", "SHORT_URL", "INTENT", "START_TIME", "END_TIME", "MEDIA",
+							"SUBJECT_AREA"],
+							"sort": [
+									{
+									"START_DATE": {
+										"order": "asc"
+									}
+								}
+							]
+						}
+					]]>
+				</query>
+				<replace_keyword>
+					<![CDATA[
+						{
+							"match": {
+								"KEYWORD": {
+									"query": "?KEYWORD"
+								}
+							}
+						}
+					]]>
+				</replace_keyword>
+				<replace_secondary>
+					<![CDATA[
+						{
+							"match": {
+								"SECONDARY_ENTITY_NAME": {
+									"query": "?SECONDARY"
+								}
+							}
+						}
+					]]>
+				</replace_secondary>
+			</step>
+			
+		</steps>
+	</Timing>
+
+	<Location>
+		<attributes>
+			<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_OFFICE_NM elastic="ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_BLDG_NM elastic="ENTITY_NAME" default="" type="string"/>
+			<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+			<CTX_RES_EMAIL elastic="EMAIL" default="" type="string" col="lat"/>
+			<CTX_RES_FAX elastic="FAX" default="" type="string" col="lon"/>
+			<CTX_RES_PERSN_NAME elastic="PERSON" default="" type="string"/>
+			<CTX_RES_PH elastic="PHONE" default="" type="string"/>
+			<CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/>
+			<CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/>
+			<CTX_RES_DESC elastic="DESCRIPTION" default="" type="string"/>
+			<CTX_RES_SHORT_URL elastic="SHORT_URL" default="" type="string"/>
+			<CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string"/>
+			<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+			<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_WEBSITE elastic="REF_URL" default="" type="string"/>
+			<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+			<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+			<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+			<CTX_RES_DISTANCE elastic="" default="0" type="distance"/>
+			<CTX_RES_INTENT elastic="INTENT" default="Location" type="string"/>
+			<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+			<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+			<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+		</attributes>
+	
+		<steps>
+			<step>
+				<query url="/location/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "SECONDARY_ENTITY_NAME"
+																			}
+																		}
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"boost": 50
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_keyword
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"should": [
+																?replace_secondary
+															],
+															"boost": 30
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"bool": {
+																		"should": [
+																			?replace_secondary
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must_not": {
+																			"exists": {
+																				"field": "IS_ALTERNATE"
+																			}
+																		}
+																	}
+																}
+															],
+															"boost": 5
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							},
+							"size":30,
+							"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA", "SUBJECT_AREA"],
+							"sort" : [
+								{
+									"_geo_distance" : {
+										"LAT_LON" : {
+											"lat": ?INTPUT_latitude, 
+											"lon": ?INTPUT_longitude
+										},
+										"order" : "asc",
+										"unit" : "km",
+										"mode" : "min",
+										"distance_type" : "arc"
+									}
+								}
+							]
+						}
+					]]>
+				</query>
+				<replace_keyword>
+					<![CDATA[
+						{
+							"match": {
+								"KEYWORD": {
+									"query": "?KEYWORD"
+								}
+							}
+						}
+					]]>
+				</replace_keyword>
+				<replace_secondary>
+					<![CDATA[
+						{
+							"match": {
+								"SECONDARY_ENTITY_NAME": {
+									"query": "?SECONDARY"
+								}
+							}
+						}
+					]]>
+				</replace_secondary>
+			</step>
+			
+		</steps>
+	</Location>
+</map>

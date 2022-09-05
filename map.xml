@@ -1,0 +1,1460 @@
+<map><elastic name="UAEU-Test-EBSP"><Structured CTX_RES_STATUS="0" objType="" intent="Structured"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_SECONDARY_INTENT elastic="SECONDARY_INTENT" default="" type="string" intent="SECONDARY_INTENT"/><CTX_RES_ACTION_HANDLER elastic="ACTION_HANDLER" default="" type="string" intent="ACTION_HANDLER"/><CTX_RES_IS_ALTERNATE elastic="IS_ALTERNATE" default="0" type="number" intent="IS_ALTERNATE"/><CTX_RES_IS_DEFAULT elastic="IS_DEFAULT" default="0" type="number" intent="IS_DEFAULT"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><CTX_RES_STEP_COUNTER elastic="" default="" type="step" intent="STEP_COUNTER"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/></attributes><steps><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "SECONDARY_ENTITY_NAME"
+																		}
+																	}
+																}
+															}
+														],
+														"boost": 50
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															}
+														],
+														"should": [
+															?replace_secondary
+														],
+														"boost": 30
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_secondary
+																	]
+																}
+															}
+														],
+														"boost": 5
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"size":30,
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SECONDARY_INTENT", "ACTION_HANDLER", "IS_ALTERNATE", "IS_DEFAULT", "SUBJECT_AREA"]
+					}
+				]]></query><replace_keyword><![CDATA[
+					{
+						"match": {
+							"KEYWORD": {
+								"query": "?KEYWORD"
+							}
+						}
+					}
+				]]></replace_keyword><replace_secondary><![CDATA[
+					{
+						"match": {
+							"SECONDARY_ENTITY_NAME": {
+								"query": "?SECONDARY"
+							}
+						}
+					}
+				]]></replace_secondary></step></steps></Structured><Unstructured CTX_RES_STATUS="0" objType="none" intent="Unstructured"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_SECONDARY_INTENT elastic="SECONDARY_INTENT" default="" type="string" intent="SECONDARY_INTENT"/><CTX_RES_ACTION_HANDLER elastic="ACTION_HANDLER" default="" type="string" intent="ACTION_HANDLER"/><CTX_RES_IS_ALTERNATE elastic="IS_ALTERNATE" default="0" type="number" intent="IS_ALTERNATE"/><CTX_RES_IS_DEFAULT elastic="IS_DEFAULT" default="0" type="number" intent="IS_DEFAULT"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><CTX_RES_UNIQUE_ID elastic="UNIQUE_ID" default="" type="number" intent="UNIQUE_ID"/><CTX_RES_STEP_COUNTER elastic="" default="" type="step" intent="STEP_COUNTER"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/><CTX_RES_DIALOG_FLOW_ID elastic="DIALOG_FLOW_ID" default="" type="string" intent="DIALOG_FLOW_ID"/></attributes><steps><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "SECONDARY_ENTITY_NAME"
+																		}
+																	}
+																}
+															}
+														],
+														"boost": 50
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															}
+														],
+														"should": [
+															?replace_secondary
+														],
+														"boost": 30
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_secondary
+																	]
+																}
+															}
+														],
+														"boost": 5
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"size":30,
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SECONDARY_INTENT", "ACTION_HANDLER", "IS_ALTERNATE", "IS_DEFAULT", "UNIQUE_ID", "SUBJECT_AREA", "DIALOG_FLOW_ID"]
+					}
+				]]></query><replace_keyword><![CDATA[
+					{
+						"match": {
+							"KEYWORD": {
+								"query": "?KEYWORD"
+							}
+						}
+					}
+				]]></replace_keyword><replace_secondary><![CDATA[
+					{
+						"match": {
+							"SECONDARY_ENTITY_NAME": {
+								"query": "?SECONDARY"
+							}
+						}
+					}
+				]]></replace_secondary></step></steps></Unstructured><NoIntent CTX_RES_STATUS="0" objType="none" intent="NoIntent"><unstructured><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/><LANGUAGES elastic="LANGUAGES" default="" type="string"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/><CTX_RES_INTENT elastic="INTENT" default="" type="string"/><CTX_RES_COPIED_FROM elastic="COPIED_FROM" default="" type="string"/><CTX_RES_STEP_COUNTER elastic="" default="" type="step"/><CTX_RES_COUNT elastic="total" default="0" type="number"/></attributes><steps><step><query url="/unstructured/_search"><![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must_not": {
+													"exists": {
+														"field": "SECONDARY_ENTITY_NAME"
+													}
+												}
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}
+													
+												]
+											}
+										},
+										{
+											"bool": {
+												"must_not": {
+													"exists": {
+														"field": "SECONDARY_ENTITY_NAME"
+													}
+												}
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must": {
+																"exists": {
+																	"field": "SECONDARY_ENTITY_NAME",
+																	"boost": "0.4"
+																}
+															}
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}
+													
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}		
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]></query></step></steps></unstructured><structured><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/><CTX_RES_OFFICE_NM elastic="ENTITY_NAME" default="" type="string"/><CTX_RES_BLDG_NM elastic="ENTITY_NAME" default="" type="string"/><LANGUAGES elastic="LANGUAGES" default="" type="string"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" col="lat"/><CTX_RES_FAX elastic="FAX" default="" type="string" col="lon"/><CTX_RES_PERSN_NAME elastic="PERSON" default="" type="string"/><CTX_RES_PH elastic="PHONE" default="" type="string"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/><CTX_RES_DESC elastic="DESCRIPTION" default="" type="string"/><CTX_RES_SHORT_URL elastic="SHORT_URL" default="" type="string"/><CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/><CTX_RES_WEBSITE elastic="REF_URL" default="" type="string"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/><CTX_RES_DISTANCE elastic="" default="0" type="distance"/><CTX_RES_INTENT elastic="INTENT" default="Location" type="string"/><CTX_RES_COUNT elastic="total" default="0" type="number"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/></attributes><steps><step><query url="/location/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]></query></step><step><query url="/location/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]></query></step><step><query url="/location/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME",
+																"boost": "0.4"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]></query></step></steps></structured></NoIntent><TimingUnstructured CTX_RES_STATUS="0" objType="none" intent="TimingUnstructured"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/></attributes><steps><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME",
+																"boost": "0.4"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}		
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step></steps></TimingUnstructured><LCUnstructured CTX_RES_STATUS="0" objType="none" intent="LCUnstructured"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/></attributes><steps><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME",
+																"boost": "0.4"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]></query></step><step><query url="/unstructured/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}		
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT","SUBJECT_AREA"]
+					}
+				]]></query></step></steps></LCUnstructured><Location CTX_RES_STATUS="0" objType="3" intent="Location"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_OFFICE_NM elastic="ENTITY_NAME" default="" type="string" intent="OFFICE_NM"/><CTX_RES_BLDG_NM elastic="ENTITY_NAME" default="" type="string" intent="BLDG_NM"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_FAX elastic="FAX" default="" type="string" intent="FAX"/><CTX_RES_PERSN_NAME elastic="PERSON" default="" type="string" intent="PERSN_NAME"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_DESC elastic="DESCRIPTION" default="" type="string" intent="DESC"/><CTX_RES_SHORT_URL elastic="SHORT_URL" default="" type="string" intent="SHORT_URL"/><CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string" intent="MAP_URL"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_WEBSITE elastic="REF_URL" default="" type="string" intent="WEBSITE"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_DISTANCE elastic="" default="0" type="distance" intent="DISTANCE"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_SECONDARY_INTENT elastic="SECONDARY_INTENT" default="" type="string" intent="SECONDARY_INTENT"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/></attributes><steps><step><query url="/location/_search"><![CDATA[
+					{
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA", "SUBJECT_AREA"],
+						"size": 10
+					}
+				]]></query></step></steps></Location><Contact CTX_RES_STATUS="0" objType="3" intent="Contact"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_OFFICE_NM elastic="ENTITY_NAME" default="" type="string" intent="OFFICE_NM"/><CTX_RES_BLDG_NM elastic="ENTITY_NAME" default="" type="string" intent="BLDG_NM"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_FAX elastic="FAX" default="" type="string" intent="FAX"/><CTX_RES_PERSN_NAME elastic="PERSON" default="" type="string" intent="PERSN_NAME"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_DESC elastic="DESCRIPTION" default="" type="string" intent="DESC"/><CTX_RES_SHORT_URL elastic="SHORT_URL" default="" type="string" intent="SHORT_URL"/><CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string" intent="MAP_URL"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_WEBSITE elastic="REF_URL" default="" type="string" intent="WEBSITE"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_DISTANCE elastic="" default="0" type="distance" intent="DISTANCE"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/></attributes><steps><step><query url="/contact/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]></query></step><step><query url="/contact/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]></query></step></steps></Contact><Difference CTX_RES_STATUS="0" objType="difference" intent="Difference"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_LANGUAGES elastic="LANGUAGES" default="" type="json" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/></attributes><steps><step><query url="/difference/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and" }}}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "LANGUAGES", "KEYWORD", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID"]
+					}
+				]]></query></step></steps></Difference><GenericIntent CTX_RES_STATUS="0" objType="non" intent="GenericIntent"><attributes><CTX_RES_ENTITY_NAME elastic="INTENT_NAME" default="" type="string" intent="ENTITY_NAME"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_INTENT elastic="INTENT_NAME" default="" type="string" intent="INTENT"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/></attributes><steps><step><query url="/generic_intent/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{"match" : { "INTENT_NAME" : { "query":"?INTENT", "operator":"and" }}},
+									{ "range" : { "END_DATE" : {"gte" : "?today"}}}
+								]
+							}
+						
+						},
+						"_source": ["INTENT_NAME", "LANGUAGES"],
+						"size": 1
+					}
+				]]></query></step></steps></GenericIntent><Timing CTX_RES_STATUS="0" objType="4" intent="Timing"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string" intent="DESCRIPTION"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_START_DATE elastic="START_DATE" default="" type="date" intent="START_DATE"/><CTX_RES_END_DATE elastic="END_DATE" default="" type="date" intent="END_DATE"/><CTX_RES_START_TIME elastic="START_TIME" default="" type="string" intent="START_TIME"/><CTX_RES_END_TIME elastic="END_TIME" default="" type="string" intent="END_TIME"/><CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string" intent="WEEKDAY_START_TIME"/><CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string" intent="WEEKDAY_END_TIME"/><CTX_RES_WEEKEND_START_TIME elastic="WEEKEND_START_TIME" default="" type="string" intent="WEEKEND_START_TIME"/><CTX_RES_WEEKEND_END_TIME elastic="WEEKEND_END_TIME" default="" type="string" intent="WEEKEND_END_TIME"/><CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string" intent="MON_START_TIME"/><CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string" intent="MON_END_TIME"/><CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string" intent="TUE_START_TIME"/><CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string" intent="TUE_END_TIME"/><CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string" intent="WED_START_TIME"/><CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string" intent="WED_END_TIME"/><CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string" intent="THU_START_TIME"/><CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string" intent="THU_END_TIME"/><CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string" intent="FRI_START_TIME"/><CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string" intent="FRI_END_TIME"/><CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string" intent="SAT_START_TIME"/><CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string" intent="SAT_END_TIME"/><CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string" intent="SUN_START_TIME"/><CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string" intent="SUN_END_TIME"/><CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string" intent="EXCEPTION_TEXT"/><CTX_RES_VENUE elastic="LOCATION" default="" type="string" intent="VENUE"/><CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string" intent="PERSN_NAME"/><CTX_RES_PERSON elastic="PERSON" default="" type="string" intent="PERSON"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_URL elastic="REF_URL" default="" type="string" intent="URL"/><CTX_SHORT_URL elastic="SHORT_URL" default="" type="string" intent="CTX_SHORT_URL"/><CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string" intent="MAP_URL"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_FAX elastic="FAX" default="" type="string" col="lon" intent="FAX"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_INTENT elastic="INTENT" default="" type="string" intent="INTENT"/><CTX_RES_SECONDARY_INTENT elastic="SECONDARY_INTENT" default="" type="string" intent="SECONDARY_INTENT"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/></attributes><steps><step><query url="/timing/_search"><![CDATA[
+					{
+						"must":	{
+							"bool": {
+								"should":[
+									{
+										"bool": {
+											"must":[
+												{
+													"bool": {
+														"must": [
+															{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+															{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+														]
+													}
+												},
+												{
+													"bool": {
+														"should": [
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																	]		
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																	]
+																}
+															}
+														]
+													}
+												}
+											]
+										}
+									},
+									{
+										"bool": {
+											"must": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "START_DATE"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "END_DATE"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "WEEKEND_START_TIME", "WEEKEND_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "DESCRIPTION", "LOCATION", "PHONE", "EMAIL", "LAT_LON", "PRESENTER", "REF_URL", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "FAX", "PERSON", "MAP_URL", "SHORT_URL", "INTENT", "START_TIME", "END_TIME", "MEDIA",
+						"SUBJECT_AREA"],
+						"size": 10
+					}
+				]]></query></step></steps></Timing><Assignment CTX_RES_STATUS="0" objType="5" intent="Assignment"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_NAME elastic="ENTITY_NAME" default="" type="string" intent="NAME"/><CTX_STUDENT_ID elastic="STUDENT_ID" default="" type="string" intent="CTX_STUDENT_ID"/><CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string" intent="DESCRIPTION"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_START_DATE elastic="START_DATE" default="" type="string" intent="START_DATE"/><CTX_RES_END_DATE elastic="END_DATE" default="" type="string" intent="END_DATE"/><CTX_RES_START_TIME default="" type="string" intent="START_TIME" elastic="START_TIME"/><CTX_RES_END_TIME default="" type="string" intent="END_TIME" elastic="END_TIME"/><CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string" intent="WEEKDAY_START_TIME"/><CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string" intent="WEEKDAY_END_TIME"/><CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string" intent="MON_START_TIME"/><CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string" intent="MON_END_TIME"/><CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string" intent="TUE_START_TIME"/><CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string" intent="TUE_END_TIME"/><CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string" intent="WED_START_TIME"/><CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string" intent="WED_END_TIME"/><CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string" intent="THU_START_TIME"/><CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string" intent="THU_END_TIME"/><CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string" intent="FRI_START_TIME"/><CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string" intent="FRI_END_TIME"/><CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string" intent="SAT_START_TIME"/><CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string" intent="SAT_END_TIME"/><CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string" intent="SUN_START_TIME"/><CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string" intent="SUN_END_TIME"/><CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string" intent="EXCEPTION_TEXT"/><CTX_RES_VENUE elastic="LOCATION" default="" type="string" intent="VENUE"/><CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string" intent="PERSN_NAME"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_URL elastic="REF_URL" default="" type="string" intent="URL"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_EVENT_COUNT elastic="total" default="0" type="number" intent="EVENT_COUNT"/></attributes><steps><step><query url="/assignment/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{ "match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }} }		
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									},
+									{
+										"match" : { "STUDENT_ID" : { "query":"?userId", "operator":"and" }}
+									},
+									{
+										"bool": {
+											"should":[
+												{
+													"bool": {
+														"must":[
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																				]		
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																		{
+																			"bool": {
+																				"must_not": {
+																					"exists": {
+																						"field": "END_DATE"
+																					}
+																				}
+																			}
+																		}
+																	]
+																}
+															}
+														]
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "START_DATE"
+																		}
+																	}
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "END_DATE"
+																		}
+																	}
+																}
+															}
+															
+														]
+													}
+												}
+											]
+										}
+									}
+								]
+								
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "PHONE", "EMAIL", "DESCRIPTION", "REF_URL", "STUDENT_ID", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES"],
+						"sort": { "START_DATE": { "order": "asc" }},
+						"size": 10
+					}
+				]]></query></step><step><query url="/assignment/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [									
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"match" : { "STUDENT_ID" : { "query":"?userId", "operator":"and" }}
+									},
+									{
+										"bool": {
+											"should":[
+												{
+													"bool": {
+														"must":[
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																				]		
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																		{
+																			"bool": {
+																				"must_not": {
+																					"exists": {
+																						"field": "END_DATE"
+																					}
+																				}
+																			}
+																		}
+																	]
+																}
+															}
+														]
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "START_DATE"
+																		}
+																	}
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "END_DATE"
+																		}
+																	}
+																}
+															}
+															
+														]
+													}
+												}
+											]
+										}
+									}
+								]
+								
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "PHONE", "EMAIL", "DESCRIPTION", "REF_URL", "STUDENT_ID", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES"],
+						"sort": { "START_DATE": { "order": "asc" }},
+						"size": 10
+					}
+				]]></query></step></steps></Assignment><CampusEvent CTX_RES_STATUS="0" objType="6" intent="CampusEvent"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_NAME elastic="ENTITY_NAME" default="" type="string" intent="NAME"/><CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string" intent="DESCRIPTION"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_START_DATE elastic="START_DATE" default="" type="string" intent="START_DATE"/><CTX_RES_END_DATE elastic="END_DATE" default="" type="string" intent="END_DATE"/><CTX_RES_START_TIME elastic="START_TIME" default="" type="string" intent="START_TIME"/><CTX_RES_END_TIME elastic="END_TIME" default="" type="string" intent="END_TIME"/><CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string" intent="WEEKDAY_START_TIME"/><CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string" intent="WEEKDAY_END_TIME"/><CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string" intent="MON_START_TIME"/><CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string" intent="MON_END_TIME"/><CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string" intent="TUE_START_TIME"/><CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string" intent="TUE_END_TIME"/><CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string" intent="WED_START_TIME"/><CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string" intent="WED_END_TIME"/><CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string" intent="THU_START_TIME"/><CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string" intent="THU_END_TIME"/><CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string" intent="FRI_START_TIME"/><CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string" intent="FRI_END_TIME"/><CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string" intent="SAT_START_TIME"/><CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string" intent="SAT_END_TIME"/><CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string" intent="SUN_START_TIME"/><CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string" intent="SUN_END_TIME"/><CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string" intent="EXCEPTION_TEXT"/><CTX_RES_VENUE elastic="LOCATION" default="" type="string" intent="VENUE"/><CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string" intent="PERSN_NAME"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_URL elastic="REF_URL" default="" type="string" intent="URL"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_LAT_LON elastic="LAT_LON" default="" type="string" intent="LAT_LON"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_EVENT_COUNT elastic="total" default="0" type="number" intent="EVENT_COUNT"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/></attributes><steps><step name="CampusMatchQuery"><query url="/campus_event/_search"><![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "PRESENTER" : {"query":"?person", "operator":"and" }}},
+												{"match" : { "LOCATION" : {"query":"?venue", "operator":"and" }}},
+												{"query_string" : {"query": "?input_text", "fields":["ENTITY_NAME"]}}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"should":[
+												{
+													"bool": {
+														"must":[
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																				]		
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		},
+																		{
+																			"bool": {
+																				"must": [
+																					{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																					{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																				]
+																			}
+																		}
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"should": [
+																		{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															}
+														]
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "START_DATE"
+																		}
+																	}
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "END_DATE"
+																		}
+																	}
+																}
+															}
+															
+														]
+													}
+												}
+												
+											]
+										}
+									}
+								]
+								
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "START_TIME", "END_TIME","WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "REF_URL", "PHONE", "EMAIL", "DESCRIPTION", "SECONDARY_ENTITY_NAME", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "MEDIA", "SUBJECT_AREA"],
+						"size": 10
+					}
+				]]></query></step></steps></CampusEvent><AcademicEvent CTX_RES_STATUS="0" objType="5" intent="AcademicEvent"><attributes><CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string" intent="ENTITY_NAME"/><CTX_RES_NAME elastic="ENTITY_NAME" default="" type="string" intent="NAME"/><CTX_RES_DESCRIPTION elastic="DESCRIPTION" default="" type="string" intent="DESCRIPTION"/><LANGUAGES elastic="LANGUAGES" default="" type="string" intent="LANGUAGES"/><CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string" intent="KEYWORD"/><CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string" intent="SECONDARY_ENTITY"/><CTX_RES_START_DATE elastic="START_DATE" default="" type="string" intent="START_DATE"/><CTX_RES_END_DATE elastic="END_DATE" default="" type="string" intent="END_DATE"/><CTX_RES_START_TIME elastic="START_TIME" default="" type="string" intent="START_TIME"/><CTX_RES_END_TIME elastic="END_TIME" default="" type="string" intent="END_TIME"/><CTX_RES_WEEKDAY_START_TIME elastic="WEEKDAY_START_TIME" default="" type="string" intent="WEEKDAY_START_TIME"/><CTX_RES_WEEKDAY_END_TIME elastic="WEEKDAY_END_TIME" default="" type="string" intent="WEEKDAY_END_TIME"/><CTX_RES_MON_START_TIME elastic="MON_START_TIME" default="" type="string" intent="MON_START_TIME"/><CTX_RES_MON_END_TIME elastic="MON_END_TIME" default="" type="string" intent="MON_END_TIME"/><CTX_RES_TUE_START_TIME elastic="TUE_START_TIME" default="" type="string" intent="TUE_START_TIME"/><CTX_RES_TUE_END_TIME elastic="TUE_END_TIME" default="" type="string" intent="TUE_END_TIME"/><CTX_RES_WED_START_TIME elastic="WED_START_TIME" default="" type="string" intent="WED_START_TIME"/><CTX_RES_WED_END_TIME elastic="WED_END_TIME" default="" type="string" intent="WED_END_TIME"/><CTX_RES_THU_START_TIME elastic="THU_START_TIME" default="" type="string" intent="THU_START_TIME"/><CTX_RES_THU_END_TIME elastic="THU_END_TIME" default="" type="string" intent="THU_END_TIME"/><CTX_RES_FRI_START_TIME elastic="FRI_START_TIME" default="" type="string" intent="FRI_START_TIME"/><CTX_RES_FRI_END_TIME elastic="FRI_END_TIME" default="" type="string" intent="FRI_END_TIME"/><CTX_RES_SAT_START_TIME elastic="SAT_START_TIME" default="" type="string" intent="SAT_START_TIME"/><CTX_RES_SAT_END_TIME elastic="SAT_END_TIME" default="" type="string" intent="SAT_END_TIME"/><CTX_RES_SUN_START_TIME elastic="SUN_START_TIME" default="" type="string" intent="SUN_START_TIME"/><CTX_RES_SUN_END_TIME elastic="SUN_END_TIME" default="" type="string" intent="SUN_END_TIME"/><CTX_RES_EXCEPTION_TEXT elastic="EXCEPTION_TEXT" default="" type="string" intent="EXCEPTION_TEXT"/><CTX_RES_VENUE elastic="LOCATION" default="" type="string" intent="VENUE"/><CTX_RES_PERSN_NAME elastic="PRESENTER" default="" type="string" intent="PERSN_NAME"/><CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat" intent="LAT"/><CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon" intent="LONG"/><CTX_RES_URL elastic="REF_URL" default="" type="string" intent="URL"/><CTX_RES_PH elastic="PHONE" default="" type="string" intent="PH"/><CTX_RES_EMAIL elastic="EMAIL" default="" type="string" intent="EMAIL"/><CTX_RES_REF_URL elastic="REF_URL" default="" type="string" intent="REF_URL"/><CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string" intent="PROCESS_AGENT_ID"/><CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string" intent="PROCESS_ID"/><CTX_RES_COUNT elastic="total" default="0" type="number" intent="COUNT"/><CTX_RES_EVENT_COUNT elastic="total" default="0" type="number" intent="EVENT_COUNT"/><CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json" intent="MEDIA"/><CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string" intent="SUBJECT_AREA"/><RELAVANCE elastic="RELAVANCE" default="0" type="number" intent="RELAVANCE"/></attributes><steps><step><query url="/academic_event/_search"><![CDATA[
+					{
+						"must": {
+							"bool": {
+								"should":[
+									{
+										"bool": {
+											"must":[
+												{
+													"bool": {
+														"must": [
+															{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+															{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+														]
+													}
+												},
+												{
+													"bool": {
+														"should": [
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } },
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date2" } } }
+																	]		
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "START_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "START_DATE" : { "lte" : "?sys_date2" } } }
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must": [
+																		{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+																		{ "range" : { "END_DATE" : { "lte" : "?sys_date2" } } }
+																	]
+																}
+															}
+														]
+													}
+												},
+												{
+													"bool": {
+														"should": [
+															{ "range" : { "END_DATE" : { "gte" : "?sys_date1" } } },
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "END_DATE"
+																		}
+																	}
+																}
+															}
+														]
+													}
+												}
+											]
+										}
+									},
+									{
+										"bool": {
+											"must": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "START_DATE"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "END_DATE"
+															}
+														}
+													}
+												}
+												
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "START_DATE", "END_DATE", "WEEKDAY_START_TIME", "WEEKDAY_END_TIME", "MON_START_TIME", "MON_END_TIME", "TUE_START_TIME", "TUE_END_TIME", "WED_START_TIME", "WED_END_TIME", "THU_START_TIME", "THU_END_TIME", "FRI_START_TIME", "FRI_END_TIME", "SAT_START_TIME", "SAT_END_TIME", "SUN_START_TIME", "SUN_END_TIME", "EXCEPTION_TEXT", "LOCATION", "PRESENTER", "LAT_LON", "REF_URL", "PHONE", "EMAIL", "DESCRIPTION", "REF_URL", "SECONDARY_ENTITY_NAME", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "START_TIME", "END_TIME", "MEDIA", "SUBJECT_AREA"],
+						"size": 10
+					}
+				]]></query></step></steps></AcademicEvent><N10001 CTX_RES_STATUS="0" objType="none"><attributes><CTX_RES_ACAD_STANDING elastic="ACADEMIC_STANDING" default="" type="string" intent="ACAD_STANDING"/></attributes><steps><step><query url="/student_academic_profile/_search"><![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["ACADEMIC_STANDING"],
+						"size": 1
+					}
+				]]></query></step></steps></N10001><N10002 CTX_RES_STATUS="0" objType="none"><attributes><CTX_RES_DEGREE_AUDIT_RUN_DATE default="" elastic="LAST_AUDITED_DATE" type="date" intent="DEGREE_AUDIT_RUN_DATE"/><CTX_RES_DEGREE_AUDIT_STATUS default="" calculate="" type="number" intent="DEGREE_AUDIT_STATUS" elastic="DEGREE_AUDIT_STATUS"/></attributes><steps><step><query url="/student_academic_profile/_search"><![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["LAST_AUDITED_DATE"],
+						"size": 1
+					}
+				]]></query></step></steps></N10002><N10003 CTX_RES_STATUS="0" objType="none"><attributes><CTX_RES_GRADE_FORGIVENESS_LIMIT elastic="TOT_GFR_LMT" default="0" type="number" intent="GRADE_FORGIVENESS_LIMIT"/><CTX_RES_GRADE_FORGIVENESS_USED default="0" elastic="TOT_GFR_USED" type="number" intent="GRADE_FORGIVENESS_USED"/><CTX_RES_GRADE_FORGIVENESS_AVAILABLE calculate="CTX_RES_GRADE_FORGIVENESS_LIMIT - CTX_RES_GRADE_FORGIVENESS_USED" default="0" type="number" intent="GRADE_FORGIVENESS_AVAILABLE" elastic="GRADE_FORGIVENESS_AVAILABLE"/></attributes><steps><step><query url="/student_academic_profile/_search"><![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["TOT_GFR_LMT", "TOT_GFR_USED"],
+						"size": 1
+					}
+				]]></query></step></steps></N10003><N10004 CTX_RES_STATUS="2" objType="none"><attributes><Status elastic="status" type="String" intent="Status"/><Reason elastic="reason" type="string" intent="Reason"/><Action elastic="action" type="string" intent="Action"/></attributes><steps/></N10004></elastic></map>

@@ -1,0 +1,22 @@
+<map>
+	<attributes>	
+		<CTX_RES_ACAD_STANDING elastic="ACADEMIC_STANDING" default="" type="string"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/student_academic_profile/_search">
+				<![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["ACADEMIC_STANDING"],
+						"size": 1
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

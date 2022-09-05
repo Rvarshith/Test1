@@ -1,0 +1,123 @@
+<map>
+	<attributes>
+		<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+		<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+		<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+		<CTX_RES_INTENT elastic="INTENT" default="" type="string"/>
+		<CTX_RES_SECONDARY_INTENT elastic="SECONDARY_INTENT" default="" type="string"/>
+		<CTX_RES_ACTION_HANDLER elastic="ACTION_HANDLER" default="" type="string"/>
+		<CTX_RES_IS_ALTERNATE elastic="IS_ALTERNATE" default="0" type="number"/>
+		<CTX_RES_IS_DEFAULT elastic="IS_DEFAULT" default="0" type="number"/>
+		<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+		<CTX_RES_UNIQUE_ID elastic="UNIQUE_ID" default="" type="number"/>
+		<CTX_RES_STEP_COUNTER elastic="" default="" type="step"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+		<RELAVANCE elastic="RELAVANCE" default="0" type="number"/>
+		<CTX_RES_DIALOG_FLOW_ID elastic="DIALOG_FLOW_ID" default="" type="string"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/unstructured/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															},
+															{
+																"bool": {
+																	"must_not": {
+																		"exists": {
+																			"field": "SECONDARY_ENTITY_NAME"
+																		}
+																	}
+																}
+															}
+														],
+														"boost": 50
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_keyword
+																	]
+																}
+															}
+														],
+														"should": [
+															?replace_secondary
+														],
+														"boost": 30
+													}
+												},
+												{
+													"bool": {
+														"must": [
+															{
+																"bool": {
+																	"should": [
+																		?replace_secondary
+																	]
+																}
+															}
+														],
+														"boost": 5
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"size":30,
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SECONDARY_INTENT", "ACTION_HANDLER", "IS_ALTERNATE", "IS_DEFAULT", "UNIQUE_ID", "SUBJECT_AREA", "DIALOG_FLOW_ID"]
+					}
+				]]>
+			</query>
+			<replace_keyword>
+				<![CDATA[
+					{
+						"match": {
+							"KEYWORD": {
+								"query": "?KEYWORD"
+							}
+						}
+					}
+				]]>
+			</replace_keyword>
+			<replace_secondary>
+				<![CDATA[
+					{
+						"match": {
+							"SECONDARY_ENTITY_NAME": {
+								"query": "?SECONDARY"
+							}
+						}
+					}
+				]]>
+			</replace_secondary>
+		</step>			
+	</steps>
+</map>

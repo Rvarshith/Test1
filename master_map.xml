@@ -1,0 +1,21 @@
+<map>
+	<elastic name="UAEU-Test-EBSP">
+		<Structured CTX_RES_STATUS="0" objType="" intent="Structured" />
+		<Unstructured CTX_RES_STATUS="0" objType="none" intent="Unstructured" />
+		<NoIntent CTX_RES_STATUS="0"  objType="none" intent="NoIntent" />
+		<TimingUnstructured CTX_RES_STATUS="0"  objType="none" intent="TimingUnstructured" />
+		<LCUnstructured CTX_RES_STATUS="0"  objType="none" intent="LCUnstructured" />				
+		<Location CTX_RES_STATUS="0"  objType="3" intent="Location" />
+		<Contact CTX_RES_STATUS="0"  objType="3" intent="Contact" />
+		<Difference CTX_RES_STATUS="0"  objType="difference" intent="Difference" />		
+		<GenericIntent CTX_RES_STATUS="0"  objType="non" intent="GenericIntent" />
+		<Timing CTX_RES_STATUS="0"  objType="4" intent="Timing" />	
+		<Assignment CTX_RES_STATUS="0"  objType="5" intent="Assignment" />
+		<CampusEvent CTX_RES_STATUS="0"  objType="6" intent="CampusEvent"/>
+		<AcademicEvent CTX_RES_STATUS="0"  objType="5" intent="AcademicEvent" />
+		<N10001 CTX_RES_STATUS="0" objType="none"/>
+        <N10002 CTX_RES_STATUS="0" objType="none"/>
+        <N10003 CTX_RES_STATUS="0" objType="none"/>
+        <N10004 CTX_RES_STATUS="2" objType="none"/>
+    </elastic>
+</map>

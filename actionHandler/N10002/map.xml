@@ -1,0 +1,23 @@
+<map>
+	<attributes>	
+		<CTX_RES_DEGREE_AUDIT_RUN_DATE default="" elastic="LAST_AUDITED_DATE" type="date"/>
+		<CTX_RES_DEGREE_AUDIT_STATUS default="" calculate="" type="number"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/student_academic_profile/_search">
+				<![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["LAST_AUDITED_DATE"],
+						"size": 1
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

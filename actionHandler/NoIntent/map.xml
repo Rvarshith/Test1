@@ -1,0 +1,386 @@
+<map>
+	<unstructured>
+		<attributes>
+			<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+			<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+			<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+			<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+			<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+			<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+			<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+			<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+			<CTX_RES_INTENT elastic="INTENT" default="" type="string"/>
+			<CTX_RES_COPIED_FROM elastic="COPIED_FROM" default="" type="string"/>
+			<CTX_RES_STEP_COUNTER elastic="" default="" type="step"/>
+			<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+		</attributes>
+		<steps>
+			<step>
+				<query url="/unstructured/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"must_not": {
+													"exists": {
+														"field": "SECONDARY_ENTITY_NAME"
+													}
+												}
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]>
+				</query>
+			</step>
+			<step>
+				<query url="/unstructured/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}
+													
+												]
+											}
+										},
+										{
+											"bool": {
+												"must_not": {
+													"exists": {
+														"field": "SECONDARY_ENTITY_NAME"
+													}
+												}
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]>
+				</query>
+			</step>
+			<step>
+				<query url="/unstructured/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must": {
+																"exists": {
+																	"field": "SECONDARY_ENTITY_NAME",
+																	"boost": "0.4"
+																}
+															}
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]>
+				</query>
+			</step>
+			<step>
+				<query url="/unstructured/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should":[
+													{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+													{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+												]
+											}
+										},
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}
+													
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]>
+				</query>
+			</step>
+			<step>
+				<query url="/unstructured/_search">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"bool": {
+												"should": [
+													{
+														"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+													}		
+												]
+											}
+										}
+									]
+								}
+							},
+							"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "COPIED_FROM"]
+						}
+					]]>
+				</query>
+			</step>
+		</steps>
+	</unstructured>
+	<structured>
+		<attributes>
+		<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_OFFICE_NM elastic="ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_BLDG_NM elastic="ENTITY_NAME" default="" type="string"/>
+		<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+		<CTX_RES_EMAIL elastic="EMAIL" default="" type="string" col="lat"/>
+		<CTX_RES_FAX elastic="FAX" default="" type="string" col="lon"/>
+		<CTX_RES_PERSN_NAME elastic="PERSON" default="" type="string"/>
+		<CTX_RES_PH elastic="PHONE" default="" type="string"/>
+		<CTX_RES_LAT elastic="LAT_LON" default="" type="latlon" col="lat"/>
+		<CTX_RES_LONG elastic="LAT_LON" default="" type="latlon" col="lon"/>
+		<CTX_RES_DESC elastic="DESCRIPTION" default="" type="string"/>
+		<CTX_RES_SHORT_URL elastic="SHORT_URL" default="" type="string"/>
+		<CTX_RES_MAP_URL elastic="MAP_URL" default="" type="string"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_WEBSITE elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+		<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+		<CTX_RES_DISTANCE elastic="" default="0" type="distance"/>
+		<CTX_RES_INTENT elastic="INTENT" default="Location" type="string"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+		<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/location/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]>
+			</query>
+		</step>
+		<step>
+			<query url="/location/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4" }}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]>
+			</query>
+		</step>
+		<step>
+			<query url="/location/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME",
+																"boost": "0.4"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "SECONDARY_ENTITY_NAME", "KEYWORD", "DESCRIPTION", "EMAIL", "FAX", "PERSON", "PHONE", "LAT_LON", "SHORT_URL", "MAP_URL", "REF_URL",  "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "MEDIA"],
+						"sort" : [
+							{
+								"_geo_distance" : {
+									"LAT_LON" : {
+										"lat": ?INTPUT_latitude, 
+										"lon": ?INTPUT_longitude
+									},
+									"order" : "asc",
+									"unit" : "km",
+									"mode" : "min",
+									"distance_type" : "arc"
+								}
+							}
+						],
+						"size": 10
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+	</structured>
+</map>

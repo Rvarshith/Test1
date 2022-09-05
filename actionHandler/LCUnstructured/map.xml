@@ -1,0 +1,164 @@
+<map>
+	<attributes>
+		<CTX_RES_ENTITY_NAME elastic="ENTITY_NAME" default="" type="string"/>
+		<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_SECONDARY_ENTITY elastic="SECONDARY_ENTITY_NAME" default="" type="string"/>
+		<CTX_RES_REF_URL elastic="REF_URL" default="" type="string"/>
+		<CTX_RES_MEDIA elastic="MEDIA" default="[]" type="json"/>
+		<CTX_RES_PROCESS_AGENT_ID elastic="PROCESS_AGENT_ID" default="" type="string"/>
+		<CTX_RES_PROCESS_ID elastic="PROCESS_ID" default="" type="string"/>
+		<CTX_RES_INTENT elastic="INTENT" default="" type="string"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+		<CTX_RES_SUBJECT_AREA elastic="SUBJECT_AREA" default="" type="string"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/unstructured/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									},
+									{
+										"bool": {
+											"must_not": {
+												"exists": {
+													"field": "SECONDARY_ENTITY_NAME"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]>
+			</query>
+		</step>
+		<step>
+			<query url="/unstructured/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"bool": {
+														"must_not": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME"
+															}
+														}
+													}
+												},
+												{
+													"bool": {
+														"must": {
+															"exists": {
+																"field": "SECONDARY_ENTITY_NAME",
+																"boost": "0.4"
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]>
+			</query>
+		</step>
+		<step>
+			<query url="/unstructured/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should":[
+												{"match" : { "ENTITY_NAME" : { "query":"?PRIMARY_ENTITY", "operator":"and" }}},
+												{"match" : { "KEYWORD" : { "query":"?KEYWORD", "operator":"and", "boost":"4"}}}
+											]
+										}
+									},
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}
+												
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT", "SUBJECT_AREA"]
+					}
+				]]>
+			</query>
+		</step>
+		<step>
+			<query url="/unstructured/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"bool": {
+											"should": [
+												{
+													"match" : { "SECONDARY_ENTITY_NAME" : { "query":"?SECONDARY_ENTITY", "operator":"and", "boost":"4" }}
+												}		
+											]
+										}
+									}
+								]
+							}
+						},
+						"_source": ["ENTITY_NAME", "KEYWORD", "SECONDARY_ENTITY_NAME", "REF_URL", "MEDIA", "PROCESS_AGENT_ID", "PROCESS_ID", "LANGUAGES", "INTENT","SUBJECT_AREA"]
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

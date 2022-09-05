@@ -1,0 +1,30 @@
+<map>
+	<attributes>
+		<CTX_RES_ENTITY_NAME elastic="INTENT_NAME" default="" type="string"/>
+		<LANGUAGES elastic="LANGUAGES" default="" type="string"/>
+		<CTX_RES_KEYWORD elastic="KEYWORD" default="" type="string"/>
+		<CTX_RES_INTENT elastic="INTENT_NAME" default="" type="string"/>
+		<CTX_RES_COUNT elastic="total" default="0" type="number"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/generic_intent/_search">
+				<![CDATA[
+					{
+						"query": {
+							"bool": {
+								"must": [
+									{"match" : { "INTENT_NAME" : { "query":"?INTENT", "operator":"and" }}},
+									{ "range" : { "END_DATE" : {"gte" : "?today"}}}
+								]
+							}
+						
+						},
+						"_source": ["INTENT_NAME", "LANGUAGES"],
+						"size": 1
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>

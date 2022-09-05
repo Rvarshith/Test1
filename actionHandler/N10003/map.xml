@@ -1,0 +1,24 @@
+<map>
+	<attributes>	
+		<CTX_RES_GRADE_FORGIVENESS_LIMIT elastic="TOT_GFR_LMT" default="0" type="number"/>
+		<CTX_RES_GRADE_FORGIVENESS_USED default="0" elastic="TOT_GFR_USED" type="number"/>
+		<CTX_RES_GRADE_FORGIVENESS_AVAILABLE calculate="CTX_RES_GRADE_FORGIVENESS_LIMIT - CTX_RES_GRADE_FORGIVENESS_USED" default="0" type="number"/>
+	</attributes>
+	<steps>
+		<step>
+			<query url="/student_academic_profile/_search">
+				<![CDATA[
+					{
+						"query" : {
+						    "term" : {
+								"PERSON_ID": "?userId"
+							}
+						},
+						"_source": ["TOT_GFR_LMT", "TOT_GFR_USED"],
+						"size": 1
+					}
+				]]>
+			</query>
+		</step>
+	</steps>
+</map>
